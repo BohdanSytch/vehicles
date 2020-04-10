@@ -43,7 +43,7 @@ class Order
     public function __construct(Manager $manager, Customer $customer, Vehicle $vehicle)
     {
         if (!$vehicle->isValid()) {
-            throw new Exception('Vehicle not ready for assembly');
+            throw new Exception('Vehicle not ready for assembly process');
         }
 
         $this->id = uniqid();
@@ -51,6 +51,8 @@ class Order
         $this->customer = $customer;
         $this->vehicle = $vehicle;
         $this->created_at = new Datetime();
+
+        $this->addCheckpoint('', $manager, $this->status);
     }
 
     public function addCheckpoint($description, User $user, $status = null)
@@ -61,7 +63,7 @@ class Order
 
         $checkpoint = [
             'user'        => $user,
-            'status'      => $status,
+            'status'      => $this->status,
             'description' => $description,
             'created_at'  => new Datetime(),
         ];
@@ -76,7 +78,7 @@ class Order
                 . ' Status: ' . $this->getStatusTitle($checkpoint['status'])
                 . ' User: ' . $checkpoint['user']->getEmail()
                 . ' Description: ' . $checkpoint['description']
-                . ' ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
+                . ' Date: ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
             );
         }
 
@@ -87,7 +89,7 @@ class Order
                 . ' Status: ' . $this->getStatusTitle($checkpoint['status'])
                 . ' User: ' . $checkpoint['user']->getEmail()
                 . ' Description: ' . $checkpoint['description']
-                . ' ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
+                . ' Date: ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
             );
         }
 
@@ -98,6 +100,7 @@ class Order
             $emailBody =
                 'Vehicle ('
                     . $this->vehicle->getType()
+                    . ' '
                     . $this->vehicle->getcolor()
                 . ') ready to go!';
 
@@ -115,7 +118,7 @@ class Order
                 . ' Status: ' . $this->getStatusTitle($checkpoint['status'])
                 . ' User: ' . $checkpoint['user']->getEmail()
                 . ' Description: ' . $checkpoint['description']
-                . ' ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
+                . ' Date: ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
                 . "\n";
         }
         if (!empty($checkpointsStr)) {

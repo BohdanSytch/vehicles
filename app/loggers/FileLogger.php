@@ -13,7 +13,7 @@ class FileLogger extends AbstractLogger
             $this->path = $path;
         }
 
-        $this->file = fopen($this->path, 'a');
+        $this->file = fopen(APP_DIR . $this->path, 'a');
     }
 
     public function __destruct()
@@ -27,12 +27,9 @@ class FileLogger extends AbstractLogger
             return ;
         }
 
-        $msg =  date('Y-m-d H:i:s') . ' : ' . $msg;
+        $msg =  date('Y-m-d H:i:s') . ': ' . $msg;
 
-        // check eol on message end
-        if (stripos(strrev($msg), "\n") !== 0) {
-            $msg .= "\n";
-        }
+        $msg = str_replace("\n", '', $msg) . "\n";
 
         fwrite($this->file, $msg);
     }

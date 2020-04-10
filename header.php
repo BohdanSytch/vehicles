@@ -11,7 +11,10 @@ spl_autoload_register(function ($class_name) {
             $path .= '/' . $part;
         }
     }
-    $path .= '/' . ucfirst($parts[$partsLen - 1]) . '.php';
+    $filename = ucfirst($parts[$partsLen - 1]) . '.php';
+    $path .= '/' . $filename;
 
     include $path;
 });
+
+define('APP_DIR', __DIR__ . '/');

@@ -11,6 +11,10 @@ class Mailer
 
     public function send($recepients, $subject, $body)
     {
+        if (!is_array($recepients)) {
+            $recepients = [$recepients];
+        }
+
         echo "Sending ... (";
         echo 'recepients:' . join($recepients, ',');
         echo ' subject:' . $subject;
