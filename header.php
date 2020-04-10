@@ -11,7 +11,7 @@ spl_autoload_register(function ($class_name) {
             $path .= '/' . $part;
         }
     }
-    $path .= '/' . $parts[$partsLen - 1] . '.php';
+    $path .= '/' . ucfirst($parts[$partsLen - 1]) . '.php';
 
     include $path;
 });
