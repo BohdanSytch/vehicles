@@ -1,0 +1,1 @@
+php7.3 -S localhost:8000 in public directory (for Ubuntu)
