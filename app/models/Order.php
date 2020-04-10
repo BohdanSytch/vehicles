@@ -72,7 +72,8 @@ class Order
         if ($this->file_logging) {
             // save to log
             (new FileLogger())->log(
-                ' Status: ' . $this->getStatusTitle($checkpoint['status'])
+                ' Order #' . $this->getId()
+                . ' Status: ' . $this->getStatusTitle($checkpoint['status'])
                 . ' User: ' . $checkpoint['user']->getEmail()
                 . ' Description: ' . $checkpoint['description']
                 . ' ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
@@ -82,7 +83,8 @@ class Order
         if ($this->email_logging) {
             // send email
             (new EmailLogger())->log(
-                ' Status: ' . $this->getStatusTitle($checkpoint['status'])
+                ' Order #' . $this->getId()
+                . ' Status: ' . $this->getStatusTitle($checkpoint['status'])
                 . ' User: ' . $checkpoint['user']->getEmail()
                 . ' Description: ' . $checkpoint['description']
                 . ' ' . $checkpoint['created_at']->format("Y-m-d H:i:s")
